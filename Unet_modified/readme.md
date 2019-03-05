@@ -11,7 +11,7 @@ as below.
    With the modified dice loss which only involves target dimension ([:,:,:,0] the model accuracy has significanly improved for my
    imbalanced dataset. Moreover, thanks to a Kaggle winning solution (https://github.com/petrosgk/Kaggle-Carvana-Image-Masking-Challenge),
    I've also found that the dice loss combined with binary cross entroy loss can be a better choice of loss function addressing the class
-   imbalance issue not siding with only neither background nor target class. 
+   imbalance issue siding with neither background nor target class. 
 
 #2. tfrecord, tf.data & tf.image 
 --------------------------------
