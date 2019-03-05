@@ -3,7 +3,7 @@
 This code is based on Unet code (https://github.com/jakeret/tf_unet) and some functionalities are modified (or added/removed) 
 as below. 
 
-1. Loss function (for imbalanced datasets)
+#1. Loss function (for imbalanced datasets)
 ------------------------------------------
 
  - In the original Unet code the dice loss involves both background ([:,:,:,0]) and target ([:,:,:,1]) dimensions. After some
@@ -13,21 +13,23 @@ as below.
    I've also found that the dice loss combined with binary cross entroy loss can be a better choice of loss function addressing the class
    imbalance issue not siding with only neither background nor target class. 
 
-2. tfrecord, tf.data & tf.image 
+#2. tfrecord, tf.data & tf.image 
 --------------------------------
 
  - All original images and masks are first converted to ".tfrecord" format for later being efficiently incorporated with tf.data 
  - tf.data is the official data pipeline recommended by Tensorflow 
  - tf.image is a high-level API for augmentation using GPU resources which allows high-speed real-time augmentation
  
-3. Input & ouput image size adjustment
+#3. Input & ouput image size adjustment
 ---------------------------------------
 
  - Input and output images are all set to be the same size by removing an image crop function and replacing "VALID" with "SAME" for all
    conv layers in the original Unet code 
 
 
-#Step 1: TFRecord creation
+# Usage
+
+###Step 1: TFRecord creation
 --------------------------
 ```
 tfrecord = TFrecord_Create_For_Unet(train_test = 'train',
@@ -50,7 +52,7 @@ tfrecord = TFrecord_Create_For_Unet(train_test = 'test',
                        
 ```
 
-#Step 2: Setting up a data provider
+###Step 2: Setting up a data provider
 -----------------------------------
 ```
 data_provider = Tfrecord_ImageDataProvider(                 
@@ -61,7 +63,7 @@ data_provider = Tfrecord_ImageDataProvider(
                                      
 ```
 
-#Step 3: Training
+###Step 3: Training
 ------------------
 ```
 net = Unet(cost = "bce_dice_coefficient", layers=5, features_root=64, channels=3) 
