@@ -1,10 +1,9 @@
 # Unet for imbalanced dataset (still in progress)
 
-This code is based on Unet code (https://github.com/jakeret/tf_unet) and some functionalities are modified (or added/removed) 
-as below. 
+This is a modified version of the original Unet code (https://github.com/jakeret/tf_unet).  
 
-#1. Loss function (for imbalanced datasets)
-------------------------------------------
+#1. Loss function (for imbalanced datasets) modified
+----------------------------------------------------
 
  - In the original Unet code the dice loss involves both background ([:,:,:,0]) and target ([:,:,:,1]) dimensions. After some
    experiments I've found that this behavior hinders the learning process for imbalanced datasets. 
@@ -13,8 +12,8 @@ as below.
    I've also found that the dice loss combined with binary cross entroy loss can be a better choice of loss function addressing the class
    imbalance issue siding with neither background nor target class. 
 
-#2. tfrecord, tf.data & tf.image 
---------------------------------
+#2. tfrecord, tf.data & tf.image added
+--------------------------------------
 
  - All original images and masks are first converted to ".tfrecord" format for later being efficiently incorporated with tf.data 
  - tf.data is the official data pipeline recommended by Tensorflow 
