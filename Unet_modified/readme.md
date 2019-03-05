@@ -1,3 +1,5 @@
+# Unet for imbalanced dataset (still in progress)
+
 This code is based on Unet code (https://github.com/jakeret/tf_unet) and some functionalities are modified (or added/removed) 
 as below. 
 
@@ -21,7 +23,7 @@ as below.
 
 #Step 1: TFRecord creation
 --------------------------
-
+'''
 tfrecord = TFrecord_Create_For_Unet(train_test = 'train',
                         img_folder = '/home/mywork/Markkim/images/',
                         img_type = 'jpg',
@@ -40,18 +42,24 @@ tfrecord = TFrecord_Create_For_Unet(train_test = 'test',
                         ny = 512
                        )
                        
+'''
 
 #Step 2: Setting up a data provider
 -----------------------------------
+'''
 data_provider = Tfrecord_ImageDataProvider(                 
                                         train_tfrecord_path = 'train.tfrecords', 
                                         test_tfrecord_path = 'test.tfrecords', 
                                         channels = 3, train_batch_size = 3, test_batch_size = 4, 
                                         nx = 512, ny = 512, n_imgs = 64)
                                      
+'''
+
 #Step 3: Training
 ------------------
+'''
 net = Unet(cost = "bce_dice_coefficient", layers=5, features_root=64, channels=3) 
 trainer = Trainer(net, data_provider = data_provider, batch_size=3, validation_batch_size = 2,optimizer="adam", lr = 0.001, 
 opt_kwargs={})
 path = trainer.train(output_path='./output_path', prediction_path = ./prediction_path', training_iters=21, epochs=100)
+'''
