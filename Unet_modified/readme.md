@@ -4,14 +4,20 @@ This code is based on Unet code (https://github.com/jakeret/tf_unet) and some fu
 as below. 
 
 1. Loss function (for imbalanced datasets)
+------------------------------------------
+------------------------------------------
+
  - In the original Unet code the dice loss involves both background ([:,:,:,0]) and target ([:,:,:,1]) dimensions. After some
    experiments I've found that this behavior hinders the learning process for imbalanced datasets. 
    With the modified dice loss which only involves target dimension ([:,:,:,0] the model accuracy has significanly improved for my
    imbalanced dataset. Moreover, thanks to a Kaggle winning solution (https://github.com/petrosgk/Kaggle-Carvana-Image-Masking-Challenge),
    I've also found that the dice loss combined with binary cross entroy loss can be a better choice of loss function addressing the class
    imbalance issue not siding with only neither background nor target class. 
-   
+
+-----------------------------------------
 2. tfrecord, tf.data & tf.image 
+------------------------------------------
+
  - All original images and masks are first converted to ".tfrecord" format for later being efficiently incorporated with tf.data 
  - tf.data is the official data pipeline recommended by Tensorflow 
  - tf.image is a high-level API for augmentation using GPU resources which allows high-speed real-time augmentation
