@@ -1,9 +1,7 @@
-from __future__ import print_function, division, absolute_import, unicode_literals
 import glob
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
 import glob
 import tensorflow as tf
 import aug
