@@ -418,4 +418,4 @@ class Trainer(object):
 #                                                                                                            acc))
 
         logging.info(
-        "Iter {:}, Minibatch Loss= {:.4f}".format(self.global_step.eval(),loss)"
+        "Iter {:}, Minibatch Loss= {:.4f}".format(self.global_step.eval(),loss))
