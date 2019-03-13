@@ -24,9 +24,14 @@ This is a modified version of the original Unet code (https://github.com/jakeret
 
  - Input and output images are all set to be the same size by removing an image crop function and replacing "VALID" with "SAME" for all
    conv layers in the original Unet code 
+   
+
+#4. Batch Normalization applied
+---------------------------------------
 
 
-# Usage
+
+# Usage (Please refer to '/example/membrane' in this github folder)
 
 ###Step 1: TFRecord creation
 --------------------------
