@@ -7,7 +7,7 @@ from tensorflow.keras.activations import tanh
 
 ######## Class, 보조 함수 정의 ##################
 
-# InstanceNormalization function 정의
+# InstanceNormalization function (https://arxiv.org/abs/1607.08022) 정의
 def IN(images):
   HW = images.shape[1]*images.shape[2] 
 
