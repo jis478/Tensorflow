@@ -8,7 +8,7 @@ Requirements: Tensorflow 1.11+
 
 #1. Dataset
 -----------------------
- - According to the original paper, the dataset utilizes only five features, which are ['Black_Hair', 'Blond_Hair', 'Brown_Hair', 'Male', 'Young']. For clarification I've only included images with a distinct hair color (eg. Black_Hair (o),  Block_Hair + Brown_Hair (x). This behavior has reduced the number of images down to around 110,000 from 220,000.
+ - According to the original paper, the dataset utilizes only five features, which are ['Black_Hair', 'Blond_Hair', 'Brown_Hair', 'Male', 'Young']. For clarification I've only included images with a distinct hair color (eg. Black_Hair (o),  Block_Hair + Brown_Hair (x)). This behavior has reduced the number of images down to around 110,000 from 220,000.
  
 ```
 * code snippet 
@@ -20,7 +20,7 @@ Requirements: Tensorflow 1.11+
     list_attr_celeba = list_attr_celeba.loc[list_attr_celeba.apply(lambda x: x['Black_Hair'] + x['Blond_Hair'] + x['Brown_Hair'], axis=1) == 1, :]
 ```
  
- - Central crop, which can be found on the original research paper is a bit ambiguous as the exact crop ratios aren't revealed. Alternatively I've used the central crop function of the tf.image class and this could possibly cause a slight performance difference compared to the original pytorch code. (need to fix this issue in the upcoming version)
+ - Central crop, which can be found on the original research paper is a bit ambiguous as the exact crop ratios aren't provided. Alternatively I've used the central crop function of the tf.image class and this could possibly cause a slight performance difference compared to the original pytorch code. (I need to fix this issue in the upcoming version)
  
  - The other dataset features also follow the official tensorflow coding guideline (eg. batch, repeat, make_one_shot_iterator)
 
