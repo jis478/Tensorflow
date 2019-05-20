@@ -2,81 +2,46 @@
 
 This is a tensorflow 2.0 version of StarGAN: Unified Generative Adversarial Networks for Multi-Domain Image-to-Image Translation(https://arxiv.org/abs/1711.09020).  
 
-This code has followed the official tensorflow 2.0 coding guideline 
+This code has followed the official tensorflow 2.0 coding guideline (https://www.tensorflow.org/alpha/guide/effective_tf2) and basic & advanced tutorials. Please be aware of that the code has been written with Tensorflow 1.11 with eager mode as CUDA version 10 is required for tensorflow 2.0 and my machine wasn't ready for CUDA upgrade. All the parts of this code can easily be converted to tensorflow 2.0 with minimal efforts.  
 
-the followings to address to be implemented in the Tensorflow 2.0 style.
+Requirements: Tensorflow 1.11+
 
-
-#1. Tensorflow Dataset
-----------------------------------------------------
-
- - In the original Unet code the dice loss involves both background ([:,:,:,0]) and target ([:,:,:,1]) dimensions. After some
-   experiments I've found that this behavior hinders the learning process for imbalanced datasets. 
-   With the modified dice loss which only involves target dimension ([:,:,:,0] the model accuracy has significanly improved for my
-   imbalanced dataset. Moreover, thanks to a Kaggle winning solution (https://github.com/petrosgk/Kaggle-Carvana-Image-Masking-Challenge),
-   I've also found that the dice loss combined with binary cross entroy loss can be a better choice of loss function addressing the class
-   imbalance issue siding with neither background nor target class. 
-
-#2. tfrecord, tf.data & tf.image added
---------------------------------------
-
- - All original images and masks are first converted to ".tfrecord" format for later being efficiently incorporated with tf.data 
- - tf.data is the official data pipeline recommended by Tensorflow 
- - tf.image is a high-level API for augmentation using GPU resources which allows high-speed real-time augmentation
+#1. Dataset
+-----------------------
+ - According to the original paper, the dataset utilizes only five features, which are ['Black_Hair', 'Blond_Hair', 'Brown_Hair', 'Male', 'Young']. For clarification I've only included images with a distinct hair color (eg. Black_Hair (o),  Block_Hair + Brown_Hair (x). This behavior has reduced the number of images down to around 110,000 from 220,000.
  
-#3. Input & ouput image size adjustment
----------------------------------------
-
- - Input and output images are all set to be the same size by removing an image crop function and replacing "VALID" with "SAME" for all
-   conv layers in the original Unet code 
-   
-
-#4. Batch Normalization applied
----------------------------------------
-
-
-
-# Usage (Please refer to '/example/membrane' in this github folder)
-
-###Step 1: TFRecord creation
---------------------------
 ```
-tfrecord = TFrecord_Create_For_Unet(train_test = 'train',
-                        img_folder = '/home/mywork/Markkim/images/',
-                        img_type = 'jpg',
-                        label_name = 'labels',
-                        tf_record_pre_fix = 'tfrecords',
-                        nx = 512,
-                        ny = 512
-                       )
-                       
-tfrecord = TFrecord_Create_For_Unet(train_test = 'test',
-                        img_folder = '/home/mywork/Markkim/images/',
-                        img_type = 'jpg',
-                        label_name = 'labels',
-                        tf_record_pre_fix = 'tfrecords',
-                        nx = 512,
-                        ny = 512
-                       )
-                       
-```
+* code snippet 
 
-###Step 2: Setting up a data provider
------------------------------------
+ domain_list = ['Black_Hair', 'Blond_Hair', 'Brown_Hair', 'Male', 'Young']
+    list_attr_celeba = pd.read_csv(attr_csv)
+    list_attr_celeba = list_attr_celeba.loc[(list_attr_celeba['Black_Hair'] == 1) | (list_attr_celeba['Blond_Hair'] == 1) | (list_attr_celeba['Brown_Hair'] == 1), domain_list]
+    list_attr_celeba = list_attr_celeba.replace({-1:0})
+    list_attr_celeba = list_attr_celeba.loc[list_attr_celeba.apply(lambda x: x['Black_Hair'] + x['Blond_Hair'] + x['Brown_Hair'], axis=1) == 1, :]
 ```
-data_provider = Tfrecord_ImageDataProvider(                 
-                                        train_tfrecord_path = 'train.tfrecords', 
-                                        test_tfrecord_path = 'test.tfrecords', 
-                                        channels = 3, train_batch_size = 3, test_batch_size = 4, 
-                                        nx = 512, ny = 512, n_imgs = 64)
-                                     
-```
+ 
+ - Central crop, which can be found on the original research paper is a bit ambiguous as the exact crop ratios aren't revealed. Alternatively I've used the central crop function of the tf.image class and this could possibly cause a slight performance difference compared to the original pytorch code. (need to fix this issue in the upcoming version)
+ 
+ - The other dataset features also follow the official tensorflow coding guideline (eg. batch, repeat, make_one_shot_iterator)
 
-###Step 3: Training
-------------------
-```
-net = Unet(cost = "bce_dice_coefficient", layers=5, features_root=64, channels=3) 
-trainer = Trainer(net, data_provider = data_provider, batch_size=3, validation_batch_size = 2,optimizer="adam", lr = 0.001, 
-opt_kwargs={})
-path = trainer.train(output_path='./output_path', prediction_path = ./prediction_path', training_iters=21, epochs=100)
-```
+#2. Loss function
+--------------------------------------
+ - Loss functions are the core parts of this code. 
+ 
+ ``` 
+ 
+ ```
+
+#3. Training conditions 
+--------------------------------------
+image resize = 128 (same as the original paper)
+batch_size = 16 (same as the original paper)
+epochs = 20 (same as the original paper)
+learning_rate = 0.0001 (same as the original paper, but learning rate decay not applied here)
+
+
+#4. Output sample
+----------------------------------------
+Training set (92, 247 images) for 20 epochs with a batch size of 16 took around 31 hrs on NVIDIA V100 GPU. I believe with more traning and sophiscated training schedule (eg. learning rate decay used in the original code) the result could be better than the below samples.
+
+
