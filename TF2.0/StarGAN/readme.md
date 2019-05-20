@@ -26,18 +26,18 @@ Requirements: Tensorflow 1.11+
 
 #2. Loss function
 --------------------------------------
- - Loss functions are the core parts of this code. 
+ - Loss functions are the core parts of this code. Generative loss (WGAN-GP), domain loss and 
  
  ``` 
- 
+  
  ```
 
 #3. Training conditions 
 --------------------------------------
-image resize = 128 (same as the original paper)
-batch_size = 16 (same as the original paper)
-epochs = 20 (same as the original paper)
-learning_rate = 0.0001 (same as the original paper, but learning rate decay not applied here)
+-image resize = 128 (same as the original paper)
+-batch_size = 16 (same as the original paper)
+-epochs = 20 (same as the original paper)
+-learning_rate = 0.0001 (same as the original paper, but learning rate decay not applied here)
 
 
 #4. Output sample
