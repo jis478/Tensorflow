@@ -8,7 +8,9 @@ Requirements: Tensorflow 1.11+
 
 #1. Dataset
 -----------------------
- - According to the original paper, the dataset utilizes only five features, which are ['Black_Hair', 'Blond_Hair', 'Brown_Hair', 'Male', 'Young']. For clarification I've only included images with a distinct hair color (eg. Black_Hair (o),  Block_Hair + Brown_Hair (x)). This behavior has reduced the number of images down to around 110,000 from 220,000.
+ - The original paper used both CelebA and RaFD datasets, but here I only used CelebA data for the sake of the training time.
+
+ - The original paper uses only five features from the CelebA dataset which are ['Black_Hair', 'Blond_Hair', 'Brown_Hair', 'Male', 'Young']. For clarification I've only included images with a distinct hair color (eg. Black_Hair (o),  Block_Hair + Brown_Hair (x)). This trick has reduced the number of images down to around 110,000 from 220,000.
  
 ```
     domain_list = ['Black_Hair', 'Blond_Hair', 'Brown_Hair', 'Male', 'Young']
