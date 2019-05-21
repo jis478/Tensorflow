@@ -1,4 +1,4 @@
-# StarGAN implemented in Tensorflow 2.0 style 
+# StarGAN implemented in the Tensorflow 2.0 style 
 
 This is a tensorflow 2.0 version of StarGAN: Unified Generative Adversarial Networks for Multi-Domain Image-to-Image Translation(https://arxiv.org/abs/1711.09020).  
 
