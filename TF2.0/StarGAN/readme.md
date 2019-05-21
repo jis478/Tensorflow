@@ -28,9 +28,9 @@ Requirements: Tensorflow 1.11+
 
 #3. Training conditions 
 --------------------------------------
- -image resize = 128 (same as the original paper)
- -batch_size = 16 (same as the original paper)
- -epochs = 20 (same as the original paper)
+ - image resize = 128 (same as the original paper)
+ - batch_size = 16 (same as the original paper)
+ - epochs = 20 (same as the original paper)
  - learning_rate = 0.0001 (same as the original paper, but learning rate decay not applied here)
  - classification lambda = 1
  - reconstruction lambda = 10
@@ -45,12 +45,8 @@ The following tricks are also implemented according to the original research pap
 ----------------------------------------
 Training set (92, 247 images) for 20 epochs with a batch size of 16 took around 31 hrs on NVIDIA V100 GPU. I believe with more traning and sophiscated training schedule (eg. learning rate decay used in the original code) the result could be better than the below samples.
 
-# Sample image
-
-
-
-
-
+![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/StarGAN/imgs/a.PNG)<br>
+**Picture:** (Left) Original real image with original attributes (Right) Fake image with random attributes 
 
 #5. Upcoming update notice
 -----------------------------------------
