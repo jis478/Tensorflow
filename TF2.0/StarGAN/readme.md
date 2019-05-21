@@ -30,26 +30,22 @@ Requirements: Tensorflow 1.11+
 
 #3. Training conditions 
 --------------------------------------
- - image resize = 128 (same as the original paper)
- - batch_size = 16 (same as the original paper)
- - epochs = 20 (same as the original paper)
- - learning_rate = 0.0001 (same as the original paper, but learning rate decay not applied here)
+ All the below hyper-parameters are same as the original paper except the learning rate scheduling which is to be added shortly.
+ - image resize = 128 
+ - batch_size = 16 
+ - epochs = 20 
+ - learning_rate = 0.0001 
  - classification lambda = 1
  - reconstruction lambda = 10
  - gradient penalty lambda = 10
- 
-#3. Tricks
---------------------------------------
-The following tricks are also implemented according to the original research paper.
- - Instance Normalisation (https://github.com/ilguyi/generative.models.tensorflow.v2/tree/master/gans)
    
-#4. Output sample
+#3. Output sample
 ----------------------------------------
 Training set (92, 247 images) for 20 epochs with a batch size of 16 took around 31 hrs on NVIDIA V100 GPU. I believe with more traning and sophiscated training schedule (eg. learning rate decay used in the original code) the result could be better than the below samples.
 
 ![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/StarGAN/imgs/a.PNG)<br>
 **Picture:** (Left) Original real image with original attributes (Right) Fake image with random attributes 
 
-#5. Upcoming update notice
+#4. Upcoming update notice
 -----------------------------------------
 Full training results (with 220,000 images and learaning rate schedule) will be updated shortly.
