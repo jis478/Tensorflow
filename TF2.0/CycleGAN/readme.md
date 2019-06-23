@@ -18,7 +18,7 @@ Requirements: Tensorflow 1.11+
  All the below hyper-parameters are same as the original paper except the learning rate scheduling which is to be added shortly.
  - image resize = 286
  - batch_size = 1
- - epochs = 200
+ - epochs = 100
  - learning_rate = 0.002 
  - Generator (Domain A) = 10.0
  - Generator (Domain B) = 10.0
@@ -27,7 +27,7 @@ Requirements: Tensorflow 1.11+
 ----------------------------------------
 
 
-![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/StarGAN/imgs/a.PNG)<br>
+![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/CycleGAN/imgs/horse.PNG)<br>
 **Picture:** (Left) Original real image with original attributes (Right) Fake image with random attributes 
 
 #4. Upcoming update notice
