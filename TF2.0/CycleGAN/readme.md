@@ -9,47 +9,27 @@ Requirements: Tensorflow 1.11+
 
 #1. Dataset
 -----------------------
- - horse2zebra dataset has been used 
+ - horse2zebra dataset has been used for performance verification and the performance turned out to be 'nearly' on par with that of the original code  
 
- - The original paper used both CelebA and RaFD datasets, but here I only used CelebA data for the sake of the training time.
-
- - The original paper uses only five features from the CelebA dataset which are ['Black_Hair', 'Blond_Hair', 'Brown_Hair', 'Male', 'Young']. For clarification I've only included images with a distinct hair color (eg. Black_Hair (o),  Block_Hair + Brown_Hair (x)). This trick has reduced the number of images down to around 110,000 from 220,000.
- 
-```
-    domain_list = ['Black_Hair', 'Blond_Hair', 'Brown_Hair', 'Male', 'Young']
-    list_attr_celeba = pd.read_csv(attr_csv)
-    list_attr_celeba = list_attr_celeba.loc[(list_attr_celeba['Black_Hair'] == 1) | (list_attr_celeba['Blond_Hair'] == 1) | (list_attr_celeba['Brown_Hair'] == 1), domain_list]
-    list_attr_celeba = list_attr_celeba.replace({-1:0})
-    list_attr_celeba = list_attr_celeba.loc[list_attr_celeba.apply(lambda x: x['Black_Hair'] + x['Blond_Hair'] + x['Brown_Hair'], axis=1) == 1, :]
-```
- 
- - Central crop, which can be found on the original research paper is a bit ambiguous as the exact crop ratios aren't provided. Alternatively I've used the central crop function of the tf.image class and this could possibly cause a slight performance difference compared to the original pytorch code. (I need to fix this issue in the upcoming version)
- - The other dataset features also follow the official tensorflow coding guideline (eg. batch, repeat, make_one_shot_iterator)
-
-#2. Loss function
---------------------------------------
- - Loss functions are the core parts of this code. Adverserial loss (WGAN-GP), domain classification loss and reconstruction loss are all implemented and lamda values are also the same as the original paper but they are definitely worth tuning.
- - Discriminator is updated five times per each generator update (same as the original paper)
-
-#3. Training conditions 
+ - The model structure has followed Tensorflow implementation of CycleGANs (https://github.com/leehomyc/cyclegan-1) 
+  
+#2. Training conditions 
 --------------------------------------
  All the below hyper-parameters are same as the original paper except the learning rate scheduling which is to be added shortly.
- - image resize = 128 
- - batch_size = 16 
- - epochs = 20 
- - learning_rate = 0.0001 
- - classification lambda = 1
- - reconstruction lambda = 10
- - gradient penalty lambda = 10
+ - image resize = 286
+ - batch_size = 1
+ - epochs = 200
+ - learning_rate = 0.002 
+ - Generator (Domain A) = 10.0
+ - Generator (Domain B) = 10.0
    
 #3. Output sample
 ----------------------------------------
-Training set (92, 247 images) for 20 epochs with a batch size of 16 took around 31 hrs on NVIDIA V100 GPU. I believe with more traning and sophiscated training schedule (eg. learning rate decay used in the original code) the result could be better than the below samples.
+
 
 ![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/StarGAN/imgs/a.PNG)<br>
 **Picture:** (Left) Original real image with original attributes (Right) Fake image with random attributes 
 
 #4. Upcoming update notice
 -----------------------------------------
-Full training results (with 220,000 images and learaning rate schedule) will be updated shortly.
-
+Identity loss and skip connection technique will be added shortly.
