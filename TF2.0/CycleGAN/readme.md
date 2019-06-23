@@ -16,12 +16,15 @@ Requirements: Tensorflow 1.11+
 #2. Training conditions 
 --------------------------------------
  All the below hyper-parameters are same as the original paper except the learning rate scheduling which is to be added shortly.
+ - original size = 256 
  - image resize = 286
  - batch_size = 1
+ - crop = True
+ - crop size = 256
  - epochs = 100
  - learning_rate = 0.002 
- - Generator (Domain A) = 10.0
- - Generator (Domain B) = 10.0
+ - Generator (Domain A) lambda = 10.0
+ - Generator (Domain B) lambda = 10.0
    
 #3. Output sample
 ----------------------------------------
