@@ -28,7 +28,9 @@ Requirements: Tensorflow 1.11+
 
 
 ![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/CycleGAN/imgs/horse.PNG)<br>
-**Picture:** (Left) Original real image with original attributes (Right) Fake image with random attributes 
+![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/CycleGAN/imgs/zebra.PNG)<br>
+
+**Picture:** (Left) Original horse image (Right) Converted zebra image 
 
 #4. Upcoming update notice
 -----------------------------------------
