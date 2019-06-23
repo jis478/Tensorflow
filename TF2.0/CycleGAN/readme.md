@@ -11,7 +11,7 @@ Requirements: Tensorflow 1.11+
 -----------------------
  - horse2zebra dataset has been used for performance verification and the performance turned out to be 'nearly' on par with that of the original code  
 
- - The model structure has followed Tensorflow implementation of CycleGANs (https://github.com/leehomyc/cyclegan-1) 
+ - The basic model structures and hyperparameters have followed Tensorflow implementation of CycleGANs (https://github.com/leehomyc/cyclegan-1) 
   
 #2. Training conditions 
 --------------------------------------
