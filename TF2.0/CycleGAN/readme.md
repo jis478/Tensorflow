@@ -29,9 +29,9 @@ Requirements: Tensorflow 1.11+
 #3. Output sample
 ----------------------------------------
 
-![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/CycleGAN/imgs/horse.PNG) [Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/CycleGAN/imgs/zebra.PNG)<br>
+![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/CycleGAN/imgs/conversion.PNG)
 
-**Picture:** (Left) Original horse image (Right) Converted zebra image 
+**Picture:** (UP) Original horse images (DOWN) Converted zebra images 
 
 #4. Upcoming update notice
 -----------------------------------------
