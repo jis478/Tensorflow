@@ -1,6 +1,7 @@
 # SinGAN implemented in the Tensorflow 2.0
 
 This is a tensorflow 2.0 version of SinGAN: Learning a Generative Model from a Single Natural Image.
+
 (paper: https://arxiv.org/pdf/1905.01164.pdf)
 (code: https://github.com/tamarott/SinGAN)
 
