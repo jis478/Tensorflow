@@ -8,13 +8,13 @@ This code has followed the official tensorflow 2.0 coding guideline (https://www
 
 Requirements: Tensorflow >= 2.0 , Python >= 3.6.0
 
-# Currently only the below commands are supported. Please refer to the original github code (https://github.com/tamarott/SinGAN) for more details. 
+## Currently only the below commands are supported. Please refer to the original github code (https://github.com/tamarott/SinGAN) for more details. 
 
-## Train a model
+### Train a model
 python main_train.py --input_name <input_file_name>
 
-## Random samples
+### Random samples
 python random_samples.py --input_name <training_image_file_name> --mode random_samples --gen_start_scale <generation start scale number>
 
-## Random samples of arbitrery sizes
+### Random samples of arbitrery sizes
 python random_samples.py --input_name <training_image_file_name> --mode random_samples_arbitrary_sizes --scale_h <horizontal scaling factor> --scale_v <vertical scaling factor>
