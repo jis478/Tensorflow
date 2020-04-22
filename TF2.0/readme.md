@@ -1,6 +1,6 @@
-# Tensorflow 2.0 
+# Tensorflow 2
 
-Tensorflow 2.0 style implementations for various GAN Research papers 
+Tensorflow 2 style implementations for various GAN Research papers 
 
 ## Tensorflow 1.13 + Keras API + Eager mode
   - CycleGAN (completed) : New implementation based on the paper
