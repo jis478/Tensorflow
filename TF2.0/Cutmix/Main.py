@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+
+
 from __future__ import absolute_import, division, print_function, unicode_literals
 import tensorflow as tf
 from tensorflow.keras import datasets, layers, models, utils, Model
@@ -152,7 +155,7 @@ def main():
                             test_err5,
                             time.time()-s_time))
   
-print('Best accuracy (top-1 and 5 error):', best_err1, best_err5)
+  print('Best accuracy (top-1 and 5 error):', best_err1, best_err5)
 
 if __name__ == '__main__':
     main()
