@@ -143,7 +143,7 @@ def main():
         best_err5 = test_err5
         model_save(model, epoch, test_err1)
   
-    if (epoch+1) % PRINT_FREQ_EPOCH == 0:
+    if (epoch+1) % args.print_freq_epoch == 0:
       print(template.format(epoch+1, 
                             args.num_epochs,
                             learning_rate.return_lr(),
