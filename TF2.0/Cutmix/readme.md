@@ -2,6 +2,7 @@
 This is a tensorflow 2.x version of CutMix: Regularization Strategy to Train Strong Classifiers with Localizable Features 
 
 paper: https://arxiv.org/abs/1905.04899
+
 code: https://github.com/clovaai/CutMix-PyTorch
 
 This code has followed the official tensorflow 2.0 coding guideline (https://www.tensorflow.org/alpha/guide/effective_tf2). 
@@ -31,7 +32,7 @@ python train.py \
 --depth 200 \
 --batch_size 64 \
 --lr 0.25 \
---expname ResNet50 \  # Only ResNet50 supported at the moment  
+--expname ResNet50 \  # Only ResNet50 supported  
 --epochs 300 \
 --beta 1.0 \
 --cutmix_prob 0.5 \
