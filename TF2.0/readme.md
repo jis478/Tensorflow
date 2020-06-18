@@ -10,5 +10,5 @@ Tensorflow 2 style implementations for various GAN Research papers
 ## Tensorflow 2.1
   - SinGAN (completed) : Converted from the original Pytorch code (all the Pytorch funtions coverted to the corresponding TF ones)
   - Cutmix (completed) : Converted from the original Pytorch code (all the Pytorch funtions coverted to the corresponding TF ones)  
-                            1) Tensorflow 2.x doesn't support slicing so instead masking has been used.
-                            2) ResNet-50 has also been implemented in Tensorflow 2.x based on the original Resnet-50 from the Cutmix repo.
+                            - Tensorflow 2.x doesn't support slicing so instead masking has been used.
+                            - ResNet-50 has also been implemented in Tensorflow 2.x based on the original Resnet-50 from the Cutmix repo.
