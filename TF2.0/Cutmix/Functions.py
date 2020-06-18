@@ -26,7 +26,6 @@ def train_augment(image,label):
   image = tf.image.random_crop(image, size=[32, 32, 3]) 
   image = tf.image.random_flip_left_right(image)
   image = tf.cast(image, dtype=tf.float32)
-  image = normalize(image)
   label = tf.cast(label, dtype=tf.float32)
   return image,label
 
