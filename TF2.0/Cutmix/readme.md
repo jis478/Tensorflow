@@ -6,7 +6,8 @@ This is a tensorflow 2.0 version of CutMix: Regularization Strategy to Train Str
 This code has followed the official tensorflow 2.0 coding guideline (https://www.tensorflow.org/alpha/guide/effective_tf2) and basic & advanced tutorials. 
 Requirements: Tensorflow >= 2.0 , Python >= 3.6.0
 
-Currently, only ResNet-50 is supported for CIFAR-10 and CIFAR-100 datasets. PyramidNet and ImageNet will be supported soon.
+- Currently, only ResNet-50 is supported for CIFAR-10 and CIFAR-100 datasets. PyramidNet and ImageNet will be supported soon.
+- Tensorflow 2.x doesn't support slicing so instead masking has been used. Please correct me know if slicing (assignment) functionality exists in Tensorflow.)  
 
 ## Training
 python train.py \
