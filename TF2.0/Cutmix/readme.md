@@ -14,7 +14,8 @@ Requirements: Tensorflow >= 2.0 , Python >= 3.6.0
 
 
 
-![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/Cutmix/imgs/original.PNG)
+![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/Cutmix/imgs/original.PNG) \n
+
 ![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/Cutmix/imgs/cutmix.PNG)
 
 **Picture:** (UP) Original images (DOWN) Cutmix images 
