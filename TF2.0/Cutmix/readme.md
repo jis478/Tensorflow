@@ -1,4 +1,4 @@
-Cutmix implemented in the Tensorflow 2.0
+# Cutmix implemented in the Tensorflow 2.0
 This is a tensorflow 2.0 version of CutMix: Regularization Strategy to Train Strong Classifiers with Localizable Features 
 
 (paper:https://arxiv.org/abs/1905.04899) (code: https://github.com/clovaai/CutMix-PyTorch)
