@@ -9,4 +9,5 @@ Tensorflow 2 style implementations for various GAN Research papers
  
 ## Tensorflow 2.1
   - SinGAN (completed) : Converted from the original Pytorch code (all the Pytorch funtions coverted to the corresponding TF ones)
-  
+  - Cutmix (completed) : Converted from the original Pytorch code (all the Pytorch funtions coverted to the corresponding TF ones)  
+                         Since Tensorflow 2.x doesn't support slicing, instead masking has been used for the Cutmix augmentation. 
