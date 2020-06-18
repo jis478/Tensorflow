@@ -27,7 +27,7 @@ Requirements: Tensorflow >= 2.0 , Python >= 3.6.0
 ## Training
 
 ```
-python train.py \
+python Train.py \
 --dataset cifar100 \  # or cifar10 
 --depth 200 \
 --batch_size 64 \
@@ -41,9 +41,8 @@ python train.py \
 
 ## Inference (to be implemented)
 ```
-python test.py \
---net_type resnet \
---dataset cifar100 \
+python Test.py \
+--dataset cifar100 \  # or cifar10
 --batch_size 64 \
 --depth 50 \
 --pretrained /... 
