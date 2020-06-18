@@ -18,13 +18,14 @@ Requirements: Tensorflow >= 2.0 , Python >= 3.6.0
 
 ![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/Cutmix/imgs/cutmix.PNG)
 
-**Picture:** (UP) Original images (DOWN) Cutmix images 
+**Picture:** (UP) Original images (DOWN) Cutmix images (from Cutmix_display.ipynb)
 
 
 
 
 ## Training
-'''
+
+```
 python train.py \
 --dataset cifar100 \  # or cifar10 
 --depth 200 \
@@ -34,15 +35,15 @@ python train.py \
 --epochs 300 \
 --beta 1.0 \
 --cutmix_prob 0.5 \
-'''
+```
 
 
 ## Inference (to be implemented)
-'''
+```
 python test.py \
 --net_type resnet \
 --dataset cifar100 \
 --batch_size 64 \
 --depth 50 \
 --pretrained /... 
-'''
+```
