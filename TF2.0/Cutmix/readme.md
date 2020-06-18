@@ -1,7 +1,8 @@
 # Cutmix implemented in the Tensorflow 2.x
 This is a tensorflow 2.x version of CutMix: Regularization Strategy to Train Strong Classifiers with Localizable Features 
 
-(paper:https://arxiv.org/abs/1905.04899) (code: https://github.com/clovaai/CutMix-PyTorch)
+paper: https://arxiv.org/abs/1905.04899
+code: https://github.com/clovaai/CutMix-PyTorch
 
 This code has followed the official tensorflow 2.0 coding guideline (https://www.tensorflow.org/alpha/guide/effective_tf2). 
 
