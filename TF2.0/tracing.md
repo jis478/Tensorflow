@@ -3,7 +3,7 @@
 
 #### 본 내용은 Cutmix tensorflow 코드를 작성 중에 @tf.function을 사용했는데 계속 re-tracing이 일어나서, 이에 대한 원인과 해결방안을 정리한 글 임 
 
-
+## 참고자료 
 1. @tf.function 정의
 https://www.tensorflow.org/guide/function
 
@@ -23,6 +23,7 @@ Tensorflow 2.x에서는 eager mode가 기본이기 때문에, 1.x 처럼 static 
 
 다음과 같은 예시가 홈페이지에 있다. 여기서 함수 인자로 들어오는 값의 형태가 계속 바뀌기 때문에 (integer -> float -> string), 함수는 호출 시마다 새로 static 그래프를 생성하는 re-tracing을 일으키게 된다. 
 
+#### re-tracing 발생 예제
 ```
 @tf.function
 def double(a):
@@ -37,11 +38,14 @@ print(double(tf.constant("a")))
 print()
 ```
 
+#### re-tracing 방지 룰
 re-tracing을 방지하기 위해 다음과 같은 룰을 지켜야 한다.
 
 1. 인자가 tensor 라면, 동일한 dtype, shape의 tensor인 경우에는 re-tracing이 일어나지 않는다.
 2. 인자가 tensor 라면, 만약 다른 dtype, shape의 tensor이거나, 인자가 tensor가 아닌 python value 인 경우에는 다른 value가 들어올 경우 re-tracing이 일어난다. 
 
+
+#### Cutmix 코드에 적용 
 위의 룰을 조금 고민해보면, @tf.function으로 custom training 함수를 감싸는 경우에는 함수로 전달되는 인자들이 python 형태라면 안된다는 결론에 도달할 수 있다. 내가 짠 코드에서도 계속 re-tracing이 난 이유도, cutmix 에서는 lambda 값을 인자로 함수에 전달해줘야 하는데 lambda가 tensor가 아닌 python float32 형태 였기 때문에 문제가 발생한 것이었다. 따라서 lambda 값을 tf.convert_to_tensor로 tensor로 변환 후 수행하면 문제 없이 돌아가는 것을 볼 수 있다. 추가로, @tf.function을 쓸 경우 CIFAR100 기준으로 Epoch 당 학습 시간이 100초 -> 60초로 40% 감소되는 장점을 확인할 수 있었다.
 
 ```
