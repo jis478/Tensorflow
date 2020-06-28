@@ -1,4 +1,4 @@
-# 올바른 @tf.function에 대한 정리 (작성 중)
+# 올바른 @tf.function에 대한 정리
 
 
 #### 본 내용은 Cutmix tensorflow 코드를 작성 중에 @tf.function을 사용했는데 계속 re-tracing이 일어나서, 이에 대한 원인과 해결방안을 정리한 글 임 
