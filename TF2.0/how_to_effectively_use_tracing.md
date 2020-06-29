@@ -11,15 +11,16 @@ https://www.tensorflow.org/guide/function
 https://books.google.co.kr/books?id=HHetDwAAQBAJ&pg=PA793&lpg=PA793&dq=tracing+tensorflow&source=bl&ots=0KwhZriiPu&sig=ACfU3U3z8-bxD9qp_N_AupnnO6fHIur8QA&hl=en&sa=X&ved=2ahUKEwi2oKCFyZ7qAhUSK6YKHWEZA804ChDoATAFegQICxAB#v=onepage&q=tracing%20tensorflow&f=false
 
 ## 1. tracing 이란?
+
 기본적으로 주어진 @tf.function decorator가 둘러싸고 있는 python 함수를 tf 함수로 변경해주는 작업 (즉, Tensorflow 1.x 처럼 static graph로 만들어주는 과정)이다. 
 Tensorflow 2.x에서는 eager mode가 기본이기 때문에, 1.x 처럼 static 방식 (define-and-run 방법)이 아닌 dynamic (define-by-run 방법) 으로 그래프가 생성이 된다. 따라서 기존 static 방식이
 자랑으로 내세웠던 빠른 속도를 일정부분 포기하는 단점이 있었고, 이를 극복하는 방법으로 @tf.function으로 static의 장점을 유지하는 방법인 것이다 (라고 홈페이지에서 강조한다.)
 
-하지만 홈페이지에서 하나 강조하는 것은 @tf.function을 무작정 사용할 경우 충돌이 일어나거나 비효율적인 tracing이 발생할 수 있기 때문에 속도 증가를 못 보는 경우가 발생할 수 있다. 속도 증가는 커녕 side effects가 발생할 수 있다는 것이다. 사실 이러한 이유로 @tf.function 코드를 custom training에 이해 없이 쓰기가 어렵게 느껴진다.
+하지만 홈페이지에서 하나 강조하는 것은 @tf.function을 무작정 사용할 경우 충돌이 일어나거나 비효율적인 tracing이 발생할 수 있기 때문에 속도 증가를 못 보는 경우가 발생할 수 있다는 것이다. 속도 증가는 커녕 side effects가 발생할 수 있다는 것인데, 사실 이러한 이유로 깊은 이해 없이 @tf.function 코드를 custom training에 쓰기가 어렵게 느껴진다.
 
-이번에 Cutmix 코드를 짜면서 custom training에 @tf.function을 써봤는데, 오류를 직접 겪으면서 체득한 것이 있어서 기록을 하고자 한다.
+특히 tracing 관련 이해가 중요한데, 이번에 Cutmix 코드를 짜면서 custom training에 @tf.function을 써본 결과 오류를 직접 겪으면서 체득한 것이 있어서 기록을 하고자 한다.
 
-일단,  @tf.function으로 감싼 함수를 호출하면, tracing이 일어나며 tensorflow static graph 형태의 concrete_function이 생성이 된다. 재미있는 것은 다음과 같은 룰인데, 당연히 이러한 기능을 쓰는 이유는 위에서 언급한대로 static -> dynamic 함수로의 변환을 원한 것이지만, 이러한 변환이 함수 호출 마다 일어난다면 매우 곤란하게 된다. 이는 python과 tensorflow의 다른 인자 처리 방법에 기인하는데, python 함수는 함수 인자로 다양한 형태를 받을 수 있지만 tensorflow는 static graph일 경우 정해진 형태의 인자만 받을 수 있기 때문이다 (당연한 얘기인듯?)
+일단,  @tf.function으로 감싼 함수를 호출하면, 당연히 tracing이 일어나며 tensorflow static graph 형태의 concrete_function이 생성이 된다 (주어진 데이터 타입 / 형태 tensor 기준으로) @tf.function을 쓰는 이유는 위에서 언급한대로 dynamic -> static 함수로 변환을 통한 속도 향상 이지만, concrete_function이 계속 생성되는 변환이 함수 호출 마다 일어난다면 매우 곤란하게 된다. 이는 python과 tensorflow의 다른 인자 처리 방법에 기인하는데, python 함수는 함수 인자로 다양한 형태를 받을 수 있지만 tensorflow는 static graph일 경우 정해진 형태의 인자만 받을 수 있기 때문이다 (당연한 얘기인듯하네..)
 
 다음과 같은 예시가 홈페이지에 있다. 여기서 함수 인자로 들어오는 값의 형태가 계속 바뀌기 때문에 (integer -> float -> string), 함수는 호출 시마다 새로 static 그래프를 생성하는 re-tracing을 일으키게 된다. 
 
