@@ -54,15 +54,44 @@ def rand_bbox(size, lam):
 
     return bbx1, bby1, bbx2, bby2
 
-class CustomSchedule(tf.keras.optimizers.schedules.LearningRateSchedule):
-  def __init__(self, init_lr):
-    self.init_lr = init_lr
-    self.steps_per_epoch = len(train_labels) // args.batch_size 
+  
+def learning_rate_schedule(*boundaries, *values):
+    lr_bound = []
+    for bound in boundaries:
+      lr_bound.append(bound * len(train_labels))      
+    return tf.keras.optimizers.schedules.PiecewiseConstantDecay(lr_bound, values)
+  
+  
+@tf.function
+def train_cutmix_image(image_cutmix, target_a, target_b, lam):
+  with tf.GradientTape() as tape:
+    output = model(image_cutmix, training=True) 
+    loss = criterion(target_a, output) * lam + criterion(target_b, output) * (1. - lam)
+  gradients = tape.gradient(loss, model.trainable_variables)
+  optimizer.apply_gradients(zip(gradients, model.trainable_variables)) 
+  return loss, output
 
-  def __call__(self, step): 
-      epoch = step // self.steps_per_epoch 
-      self.lr = self.init_lr * (0.1 ** (epoch // (args.epochs * 0.5))) * (0.1 ** (epoch // (args.epochs* 0.75)))
-      return self.lr 
 
-  def _get_lr(self):
-      return self.lr.numpy()
+@tf.function
+def train_original_image(image, target):
+  with tf.GradientTape() as tape:
+    output = model(image, training=True)
+    loss = criterion(target, output)
+  gradients = tape.gradient(loss, model.trainable_variables)
+  optimizer.apply_gradients(zip(gradients, model.trainable_variables)) 
+
+  return loss, output
+
+# class CustomSchedule(tf.keras.optimizers.schedules.LearningRateSchedule):
+#   def __init__(self, init_lr):
+#     self.init_lr = init_lr
+#     self.steps_per_epoch = len(train_labels) // args.batch_size 
+
+#   def __call__(self, step): 
+#       epoch = step // self.steps_per_epoch 
+#       self.lr = self.init_lr * (0.1 ** (epoch // (args.epochs * 0.5))) * (0.1 ** (epoch // (args.epochs* 0.75)))
+#       return self.lr 
+
+#   def _get_lr(self):
+#       return self.lr.numpy()
+
