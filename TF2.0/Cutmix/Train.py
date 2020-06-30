@@ -13,6 +13,7 @@ import time
 
 
 parser = argparse.ArgumentParser(description='Tensorflow implementation of Cutmix on CIFAR-10 / CIFAR-100 datasets')
+
 parser.add_argument('--epochs', default=90, type=int, metavar='N',
                     help='number of total epochs to run')
 parser.add_argument('-b', '--batch_size', default=128, type=int,
@@ -27,8 +28,6 @@ parser.add_argument('--no-bottleneck', dest='bottleneck', action='store_false',
                     help='to use basicblock for CIFAR datasets (default: bottleneck)')
 parser.add_argument('--dataset', dest='dataset', default='imagenet', type=str,
                     help='dataset (options: cifar10, cifar100, and imagenet)')
-parser.add_argument('--expname', default='TEST', type=str,
-                    help='name of experiment')
 parser.add_argument('--beta', default=0, type=float,
                     help='hyperparameter beta')
 parser.add_argument('--cutmix_prob', default=0, type=float,
@@ -37,6 +36,8 @@ parser.add_argument('--boundaries', default=[0, 100, 150, 200], type=list,
                     help='epochs for learning rate decay boundaries')
 parser.add_argument('--lr_values', default=[0.2, 0.1, 0.05, 0.01], type=list,
                     help='learning rates for corresponding boundaries')
+parser.add_argument('--verbose', default=1, type=int,
+                    help='print training process to screen')
 
 parser.set_defaults(bottleneck=True)
 best_err1 = 100
@@ -44,9 +45,7 @@ best_err5 = 100
 AUTO = tf.data.experimental.AUTOTUNE
 template = 'Epoch: {:03d} / {:03d}:, LR: {:.10f}, Train loss: {:.3f}, Train top1 err: {:.3f}, Train top5 err: {:.3f}, Test loss: {:.3f}, Test top1 err: {:.3f}, Test top5 err: {:.3f}, Time: {:.3f}'
 
-
-
-
+# main
 def main():
 
   global args, best_err1, best_err5
@@ -61,9 +60,9 @@ def main():
 
   # dataset 
   train_dataset = tf.data.Dataset.from_tensor_slices((train_images, train_labels))
+  train_dataset = train_dataset.shuffle(int(len(train_labels)/4))
   train_dataset = train_dataset.map(train_augment, num_parallel_calls=AUTO)
   train_dataset = train_dataset.batch(args.batch_size)
-  train_dataset = train_dataset.shuffle(512)
   train_dataset = train_dataset.prefetch(AUTO)
 
   test_dataset = tf.data.Dataset.from_tensor_slices((test_images, test_labels))
@@ -76,7 +75,7 @@ def main():
   # loss & optimizer
   criterion = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
   lr_schedule = learning_rate_schedule(args.boundaries, args.lr_values)    
-  optimizer = tf.keras.optimizers.SGD(lr_schedule, momentum=MOMENTUM, nesterov=True)
+  optimizer = tf.keras.optimizers.SGD(lr_schedule, momentum=args.momentum, nesterov=True)
  
   # metrics 
   train_loss = tf.keras.metrics.Mean(name='train_loss')
@@ -94,6 +93,8 @@ def main():
   train_summary_writer = tf.summary.create_file_writer(train_log_dir)
   test_summary_writer = tf.summary.create_file_writer(test_log_dir)
 
+  template = 'Epoch: {:03d} / {:03d}:, LR: {:.3f}, Train loss: {:.3f}, Train top1 err: {:.3f}, Train top5 err: {:.3f}, Test loss: {:.3f}, Test top1 err: {:.3f}, Test top5 err: {:.3f}, Time: {:.3f}'
+    
   # custom training
   for epoch in range(args.epochs):
 
@@ -105,10 +106,6 @@ def main():
     test_loss.reset_states()
     test_accuracy_top1.reset_states()
     test_accuracy_top5.reset_states()
-    
-    template = 'Epoch: {:03d} / {:03d}:, LR: {:.3f}, Train loss: {:.3f}, Train top1 err: {:.3f}, Train top5 err: {:.3f}, Test loss: {:.3f}, Test top1 err: {:.3f}, Test top5 err: {:.3f}, Time: {:.3f}'
-    test_err1_list = []
-    train_err1_list = []
     
     for image, target in train_dataset: 
       
@@ -162,8 +159,6 @@ def main():
     train_err5 = (1-train_accuracy_top5.result())*100
     test_err1 = (1-test_accuracy_top1.result())*100
     test_err5 = (1-test_accuracy_top5.result())*100
-    train_err1_list.append(train_err1)
-    test_err1_list.append(test_err1)
 
     # print metrics to screen
     if ((epoch+1) % PRINT_FREQ_EPOCH == 0) & (VERBOSE==1):
