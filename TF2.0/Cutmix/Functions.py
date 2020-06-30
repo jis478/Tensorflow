@@ -5,6 +5,7 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 import numpy as np
 
+
 def model_save(model):
   exp_directory = f'runs/{args.expname}/'
   if not os.path.exists(exp_directory):
@@ -21,6 +22,7 @@ def normalize(image, mean=[125.3, 123.0, 113.9], std=[63.0, 62.1, 66.7]):
   B = tf.divide(tf.subtract(image[..., 2], mean[2]), std[2])
   return tf.stack([R,G,B], axis=-1)
 
+
 def train_augment(image,label):
   image = tf.image.resize_with_crop_or_pad(image, 36, 36) 
   image = tf.image.random_crop(image, size=[32, 32, 3]) 
@@ -29,11 +31,13 @@ def train_augment(image,label):
   label = tf.cast(label, dtype=tf.float32)
   return image,label
 
+
 def test_augment(image,label):
   image = tf.cast(image, dtype=tf.float32)
   image = normalize(image)
   label = tf.cast(label, dtype=tf.float32)
   return image,label
+
 
 def rand_bbox(size, lam):
 
