@@ -59,7 +59,7 @@ def rand_bbox(size, lam):
     return bbx1, bby1, bbx2, bby2
 
   
-def learning_rate_schedule(*boundaries, *values):
+def learning_rate_schedule(boundaries, values):
     lr_bound = []
     for bound in boundaries:
       lr_bound.append(bound * len(train_labels))      
