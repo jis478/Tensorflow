@@ -5,7 +5,7 @@ import tensorflow as tf
 from tensorflow.keras import datasets, layers, models, utils, Model
 from tensorflow.keras.layers import Dense, Flatten, Conv2D
 from ResNet import ResNet
-from Functions import normalize, train_augment, test_augment, rand_bbox, CustomSchedule, model_save, train_original_image, train_cutmix_image, learning_rate_schedule
+from Functions import normalize, train_augment, test_augment, rand_bbox, model_save, train_original_image, train_cutmix_image, learning_rate_schedule
 import numpy as np
 import argparse
 import os
@@ -26,7 +26,7 @@ parser.add_argument('--depth', default=32, type=int,
                     help='depth of the network (default: 32)')
 parser.add_argument('--no-bottleneck', dest='bottleneck', action='store_false',
                     help='to use basicblock for CIFAR datasets (default: bottleneck)')
-parser.add_argument('--dataset', dest='dataset', default='imagenet', type=str,
+parser.add_argument('--dataset', dest='dataset', default='cifar100', type=str,
                     help='dataset (options: cifar10, cifar100, and imagenet)')
 parser.add_argument('--beta', default=0, type=float,
                     help='hyperparameter beta')
