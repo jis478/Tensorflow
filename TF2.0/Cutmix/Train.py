@@ -5,7 +5,7 @@ import tensorflow as tf
 from tensorflow.keras import datasets, layers, models, utils, Model
 from tensorflow.keras.layers import Dense, Flatten, Conv2D
 from ResNet import ResNet
-from Functions import normalize, train_augment, test_augment, rand_bbox, model_save, train_original_image, train_cutmix_image, learning_rate_schedule
+from Functions import normalize, train_augment, test_augment, rand_bbox, model_save
 import numpy as np
 import argparse
 import os
@@ -47,7 +47,7 @@ template = 'Epoch: {:03d} / {:03d}:, LR: {:.10f}, Train loss: {:.3f}, Train top1
 
 
 
-def learning_rate_schedule(boundaries, values):
+def learning_rate_schedule(boundaries, values, train_labels):
     lr_bound = []
     for bound in boundaries:
       lr_bound.append(bound * len(train_labels))      
@@ -104,7 +104,7 @@ def main():
   
   # loss & optimizer
   criterion = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
-  lr_schedule = learning_rate_schedule(args.boundaries, args.lr_values)    
+  lr_schedule = learning_rate_schedule(args.boundaries, args.lr_values, train_labels)    
   optimizer = tf.keras.optimizers.SGD(lr_schedule, momentum=args.momentum, nesterov=True)
  
   # metrics 
