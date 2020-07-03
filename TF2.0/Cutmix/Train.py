@@ -45,16 +45,46 @@ best_err5 = 100
 AUTO = tf.data.experimental.AUTOTUNE
 template = 'Epoch: {:03d} / {:03d}:, LR: {:.10f}, Train loss: {:.3f}, Train top1 err: {:.3f}, Train top5 err: {:.3f}, Test loss: {:.3f}, Test top1 err: {:.3f}, Test top5 err: {:.3f}, Time: {:.3f}'
 
+
+
+def learning_rate_schedule(boundaries, values):
+    lr_bound = []
+    for bound in boundaries:
+      lr_bound.append(bound * len(train_labels))      
+    return tf.keras.optimizers.schedules.PiecewiseConstantDecay(lr_bound, values)
+  
+  
+@tf.function
+def train_cutmix_image(image_cutmix, target_a, target_b, lam):
+  with tf.GradientTape() as tape:
+    output = model(image_cutmix, training=True) 
+    loss = criterion(target_a, output) * lam + criterion(target_b, output) * (1. - lam)
+  gradients = tape.gradient(loss, model.trainable_variables)
+  optimizer.apply_gradients(zip(gradients, model.trainable_variables)) 
+  return loss, output
+
+
+@tf.function
+def train_original_image(image, target):
+  with tf.GradientTape() as tape:
+    output = model(image, training=True)
+    loss = criterion(target, output)
+  gradients = tape.gradient(loss, model.trainable_variables)
+  optimizer.apply_gradients(zip(gradients, model.trainable_variables)) 
+
+  return loss, output
+
+
 # main
 def main():
 
   global args, best_err1, best_err5
   args = parser.parse_args()
 
-  if arg.dataset == 'cifar10':
+  if args.dataset == 'cifar10':
     (train_images, train_labels), (test_images, test_labels) = datasets.cifar10.load_data()
     num_classes = 10
-  elif arg.dataset == 'cifar100':
+  elif args.dataset == 'cifar100':
     (train_images, train_labels), (test_images, test_labels) = datasets.cifar100.load_data()
     num_classes = 100
 
