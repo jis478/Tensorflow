@@ -105,7 +105,7 @@ def main():
   # ckpt manager
   current_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
   ckpt_dir = os.path.join(args.ckpt_dir, current_time)
-  ckpt = tf.train.Checkpoint(model=model, optimizer=optimizer)
+  ckpt = tf.train.Checkpoint(model=model)
   ckpt_manager = tf.train.CheckpointManager(ckpt, ckpt_dir, max_to_keep=1)
 
   # metrics 
@@ -119,13 +119,13 @@ def main():
 
   # tensorboard writer 
   train_log_dir = os.path.join(args.tensorboard_dir, current_time, 'train')
-  test_log_dir = os.path.join(args.tensorboard_dir, current_time, 'test')
   train_summary_writer = tf.summary.create_file_writer(train_log_dir)
-  test_summary_writer = tf.summary.create_file_writer(test_log_dir)
   print(f'******* Train result log written to {train_log_dir} ******')
+    
+  test_log_dir = os.path.join(args.tensorboard_dir, current_time, 'test')
+  test_summary_writer = tf.summary.create_file_writer(test_log_dir)
   print(f'******* Test result log written to {test_log_dir} ******')
  
-
   template = '******* Epoch: {:03d} / {:03d}:, LR: {:.3f}, Train loss: {:.3f}, Train top1 err: {:.3f}, Train top5 err: {:.3f}, Test loss: {:.3f}, Test top1 err: {:.3f}, Test top5 err: {:.3f}, Time: {:.3f}'
     
   # custom training
@@ -171,6 +171,7 @@ def main():
       train_accuracy_top5(target, output)
 
     for image, target in test_dataset:
+      image = normalize(image)
       output = model(image, training=False)
       loss = criterion(target, output)
       test_loss(loss)
@@ -224,6 +225,9 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+    
+    
 
     
     
