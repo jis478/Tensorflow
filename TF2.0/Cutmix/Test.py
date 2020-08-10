@@ -13,7 +13,7 @@ import datetime
 
 parser = argparse.ArgumentParser(description='Tensorflow implementation of Cutmix on CIFAR-10 / CIFAR-100 datasets')
 
-parser.add_argument('--ckpt_dir', dest='ckpt_dir', default='./ckpt_dir/0200810-063837', type=str,
+parser.add_argument('--ckpt_dir', dest='ckpt_dir', default='./ckpt_dir/20200810-071421/', type=str,
                     help='checkpoint to be loaded')
 parser.add_argument('-b', '--batch_size', default=128, type=int,
                     metavar='N', help='mini-batch size')
@@ -59,16 +59,14 @@ def main():
     # load the latest checkpoint from the given ckpt folder
     ckpt = tf.train.Checkpoint(model=model)
     manager = tf.train.CheckpointManager(ckpt, args.ckpt_dir, max_to_keep=1)
-#     ckpt.restore(manager.latest_checkpoint).expect_partial() # optimizer not loaded
-#     print(f'******* Model loaded from {args.ckpt_dir} ******')
 
-    # new
     if manager.latest_checkpoint:
-    
-    ckpt = tf.train.Checkpoint(model=model, momentum=0.9)
-#     ckpt.restore(tf.train.latest_checkpoint(args.ckpt_dir)).expect_partial()
-    ckpt.restore(tf.train.latest_checkpoint(args.ckpt_dir))
-
+        ckpt.restore(manager.latest_checkpoint).expect_partial() # optimizer not loaded
+        print('checkpoint restored')
+    else:
+        raise Except
+        print('checkpoint not restored')
+   
     # test_summary_writer
     current_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
     test_log_dir = os.path.join(args.tensorboard_dir, current_time, 'test')
@@ -78,14 +76,13 @@ def main():
     # training
     s_time = time.time()
               
-    for image_t, target_t in test_dataset:
+    for image, target in test_dataset:
 
-        image_t = normalize(image_t)
-        output_t = model(image_t, training=False)
+        image = normalize(image)
+        output = model(image, training=False)
         
-        test_accuracy_top1(target_t, output_t)
-        test_accuracy_top5(target_t, output_t)
-#         print((1-test_accuracy_top5.result())*100)
+        test_accuracy_top1(target, output)
+        test_accuracy_top5(target, output)
 
     test_err1 = (1-test_accuracy_top1.result())*100
     test_err5 = (1-test_accuracy_top5.result())*100
