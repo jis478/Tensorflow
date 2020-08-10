@@ -6,14 +6,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def model_save(model):
-  exp_directory = f'runs/{args.expname}/'
-  if not os.path.exists(exp_directory):
-      os.makedirs(exp_directory)
-  # filename=f'Resnet50_cutmix_{epoch}_test_err1_{test_err1:.3f}'        
-  filename='Resnet50_cutmix_best_model'        
-  filename = directory + filename
-  model.save(filename)  
+# def model_save(model):
+#   exp_directory = f'runs/{args.expname}/'
+#   if not os.path.exists(exp_directory):
+#       os.makedirs(exp_directory)
+#   # filename=f'Resnet50_cutmix_{epoch}_test_err1_{test_err1:.3f}'        
+#   filename='Resnet50_cutmix_best_model'        
+#   filename = directory + filename
+#   model.save(filename)  
 
 
 def normalize(image, mean=[125.3, 123.0, 113.9], std=[63.0, 62.1, 66.7]):
@@ -34,7 +34,6 @@ def train_augment(image,label):
 
 def test_augment(image,label):
   image = tf.cast(image, dtype=tf.float32)
-  image = normalize(image)
   label = tf.cast(label, dtype=tf.float32)
   return image,label
 
@@ -59,43 +58,20 @@ def rand_bbox(size, lam):
     return bbx1, bby1, bbx2, bby2
 
   
-def learning_rate_schedule(boundaries, values):
-    lr_bound = []
-    for bound in boundaries:
-      lr_bound.append(bound * len(train_labels))      
-    return tf.keras.optimizers.schedules.PiecewiseConstantDecay(lr_bound, values)
+# def learning_rate_schedule(boundaries, values, train_labels):
+#     lr_bound = []
+#     for bound in boundaries:
+#       lr_bound.append(bound * len(train_labels))      
+#     return tf.keras.optimizers.schedules.PiecewiseConstantDecay(lr_bound, values)
+
   
-  
-@tf.function
-def train_cutmix_image(image_cutmix, target_a, target_b, lam):
-  with tf.GradientTape() as tape:
-    output = model(image_cutmix, training=True) 
-    loss = criterion(target_a, output) * lam + criterion(target_b, output) * (1. - lam)
-  gradients = tape.gradient(loss, model.trainable_variables)
-  optimizer.apply_gradients(zip(gradients, model.trainable_variables)) 
-  return loss, output
-
-
-@tf.function
-def train_original_image(image, target):
-  with tf.GradientTape() as tape:
-    output = model(image, training=True)
-    loss = criterion(target, output)
-  gradients = tape.gradient(loss, model.trainable_variables)
-  optimizer.apply_gradients(zip(gradients, model.trainable_variables)) 
-
-  return loss, output
-
-# class CustomSchedule(tf.keras.optimizers.schedules.LearningRateSchedule):
-#   def __init__(self, init_lr):
-#     self.init_lr = init_lr
-#     self.steps_per_epoch = len(train_labels) // args.batch_size 
-
-#   def __call__(self, step): 
-#       epoch = step // self.steps_per_epoch 
-#       self.lr = self.init_lr * (0.1 ** (epoch // (args.epochs * 0.5))) * (0.1 ** (epoch // (args.epochs* 0.75)))
-#       return self.lr 
-
-#   def _get_lr(self):
-#       return self.lr.numpy()
-
+def learning_rate_schedule(bound_epoch, lr, train_labels, batch_size, num_epochs):
+    stpes_per_epoch = len(train_labels)//batch_size
+    bound_step = [a*b for a,b in zip(bound_epoch,[stpes_per_epoch]*len(bound_epoch))]
+    print("********** Learning rate schedule ***************")
+    print(f'Epoch 0 ~ {bound_epoch[0]}: {lr[0]}')
+    for idx in range(len(bound_epoch)-1):
+        print(f'Epoch {bound_epoch[idx]} ~ {bound_epoch[idx+1]} : {lr[idx+1]}')
+    print(f'Epoch {bound_epoch[-1]} ~ {num_epochs} : {lr[-1]}')
+    print("*************************************************")
+    return tf.keras.optimizers.schedules.PiecewiseConstantDecay(bound_step, lr)
