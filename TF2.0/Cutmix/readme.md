@@ -15,10 +15,10 @@ Requirements: Tensorflow >= 2.0 , Python >= 3.6.0
 - Hyper-parameters and training strategies all follow the original Pytorch version.
 - Average one epoch training time: Original 15.42s     Cutmix: 22.97s 
 
-\
-\
-\
-\
+\n
+\n
+\n
+\n
 
 
 ![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/Cutmix/imgs/original.PNG) \
