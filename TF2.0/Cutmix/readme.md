@@ -2,9 +2,12 @@
 # Cutmix implemented in the Tensorflow 2.x
 
 
+---------------------------------------------------------------------------------------------------------------------------------
+
 #### (2020.7.6) I've raised an issue on a possibe Saved_Model API bug, and it is under investigation by the Tensorflow team.    (https://github.com/tensorflow/tensorflow/issues/41045) 
 #### (2020.8.11) Saved_Model has been replaced with Checkpoint due to the above unresolved investigation.
 
+---------------------------------------------------------------------------------------------------------------------------------
 #### This is a tensorflow 2.x version of CutMix: Regularization Strategy to Train Strong Classifiers with Localizable Features 
 
 #### original paper: https://arxiv.org/abs/1905.04899
