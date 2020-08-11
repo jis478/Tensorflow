@@ -20,7 +20,7 @@ Requirements: Tensorflow >= 2.0 , Python >= 3.6.0
 **Picture:** (UP) Original images (DOWN) Cutmix images (from Cutmix_display.ipynb)
 
 
-![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/Cutmix/imgs/plots.PNG) \
+![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/Cutmix/imgs/plots.png) \
 **Picture:**  (Left) Top 1 training error on CIFAR-100   (Right) Top-1 test error on CIFAR-100 
                             
 
