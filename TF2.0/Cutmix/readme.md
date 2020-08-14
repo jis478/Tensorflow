@@ -33,8 +33,8 @@ Requirements: Tensorflow >= 2.0 , Python >= 3.6.0
 <br/>
 <br/>
 
-![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/Cutmix/imgs/plots.png) \
-**Picture:**  (Left) Top 1 training error on CIFAR-100   (Right) Top-1 test error on CIFAR-100 
+![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/Cutmix/imgs/plots3.png) \
+**Picture:**  (Left) Top-1 training error & loss (CIFAR-100)   (Right) Top-1 error & loss (CIFAR-100) 
                             
 <br/>
 <br/>
@@ -47,13 +47,13 @@ python Train.py \
 --batch_size 128
 --momentum 0.9
 --print_freq 10
---depth 50
+--layers [3, 4, 6, 3]                 # resnet50
 --dataset cifar100
 --beta 1.0
 --cutmix_prob 0.5
 --lr_boundaries [100,50,200]
 --lr_values [0.2, 0.1, 0.05, 0.01]
---ckpt_dir ./ckpt_dir
+--ckpt_dir ./ckpt_dir                 # a new folder inside './ckpt_dir' will be created using the current time stamp 
 --tensorboard_dir ./tensorboard_dir   # for tensorboard logging
 --verbose 1
 ```
@@ -63,7 +63,7 @@ python Train.py \
 ``` 
 python Test.py \
 --batch_size 128
---depth 50
+--layers [3,4,6,3]                # resnet 50
 --dataset cifar100
 --ckpt_dir ./ckpt_dir/20200815    # checkpoint directory  
 --verbose 1
