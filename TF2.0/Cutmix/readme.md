@@ -33,7 +33,7 @@ Requirements: Tensorflow >= 2.0 , Python >= 3.6.0
 <br/>
 <br/>
 
-![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/Cutmix/imgs/plots3.png) \
+![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/Cutmix/imgs/plots3.PNG) \
 **Picture:**  (Left) Top-1 training error & loss (CIFAR-100)   (Right) Top-1 error & loss (CIFAR-100) 
                             
 <br/>
