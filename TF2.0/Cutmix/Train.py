@@ -14,27 +14,25 @@ import datetime
 
 parser = argparse.ArgumentParser(description='Tensorflow implementation of Cutmix on CIFAR-10 / CIFAR-100 datasets')
 
-parser.add_argument('--epochs', default=3, type=int, metavar='N',
+parser.add_argument('--epochs', default=200, type=int, metavar='N',
                     help='number of total epochs to run')
-parser.add_argument('-b', '--batch_size', default=128, type=int,
+parser.add_argument('--batch_size', default=128, type=int,
                     metavar='N', help='mini-batch size (default: 128)')
 parser.add_argument('--momentum', default=0.9, type=float, metavar='M',
                     help='momentum')
 parser.add_argument('--print_freq', '-p', default=1, type=int,
                     metavar='N', help='print frequency (default: 10)')
-parser.add_argument('--depth', default=32, type=int,
-                    help='depth of the network (default: 32)')
-parser.add_argument('--no-bottleneck', dest='bottleneck', action='store_false',
-                    help='to use basicblock for CIFAR datasets (default: bottleneck)')
+parser.add_argument('--layers', default=[3, 4, 6, 3], type=list,
+                    help='resnet structure (eg. resnet50: [3,4,6,3]) (default: [3,4,6,3])')
 parser.add_argument('--dataset', dest='dataset', default='cifar100', type=str,
                     help='dataset (options: cifar10 or cifar100)')
-parser.add_argument('--beta', default=0, type=float,
+parser.add_argument('--beta', default=0.0, type=float,
                     help='hyperparameter beta')
-parser.add_argument('--cutmix_prob', default=0, type=float,
+parser.add_argument('--cutmix_prob', default=0.5, type=float,
                     help='cutmix probability')
-parser.add_argument('--boundaries', default=[1, 2], type=list, # [0, 100, 150, 200]
-                    help='epochs for learning rate decay boundaries')
-parser.add_argument('--lr_values', default=[0.2, 0.1, 0.1], type=list, # [0.2, 0.1, 0.05, 0.01]
+parser.add_argument('--lr_boundaries', default=[60, 120, 160], type=list, 
+                    help='epochs for piecewise learning rate decay boundaries')
+parser.add_argument('--lr_values', default=[0.1, 0.02, 0.004, 0.0008], type=list, 
                     help='learning rates for corresponding boundaries')
 parser.add_argument('--ckpt_dir', dest='ckpt_dir', default='./ckpt_dir/', type=str,
                     help='checkpoint saving folder')
@@ -71,9 +69,8 @@ def main():
     return loss, output
 
 
-#   global args, best_err1, best_err5
   args = parser.parse_args()
-  assert len(args.boundaries)+1 == len(args.lr_values), "Epochs and Learning rates are not matched"
+  assert len(args.lr_boundaries)+1 == len(args.lr_values), "Epochs and Learning rates are not matched"
 
   if args.dataset == 'cifar10':
     (train_images, train_labels), (test_images, test_labels) = datasets.cifar10.load_data()
@@ -94,12 +91,12 @@ def main():
   test_dataset = test_dataset.map(test_augment, num_parallel_calls=AUTO)
   test_dataset = test_dataset.batch(args.batch_size)
 
-  # model building
-  model = ResNet(dataset=args.dataset, depth=args.depth, num_classes=num_classes, bottleneck=args.bottleneck) 
+  # model building (ResNet50)
+  model = ResNet(num_blocks=args.layers, num_classes=num_classes, bottleneck=args.bottleneck) 
   
   # loss & optimizer
   criterion = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
-  lr_schedule = learning_rate_schedule(args.boundaries, args.lr_values, train_labels, args.batch_size, args.epochs)    
+  lr_schedule = learning_rate_schedule(args.lr_boundaries, args.lr_values, train_labels, args.batch_size, args.epochs)    
   optimizer = tf.keras.optimizers.SGD(lr_schedule, momentum=args.momentum, nesterov=True)
     
   # ckpt manager
@@ -177,7 +174,6 @@ def main():
       test_loss(loss)
       test_accuracy_top1(target, output)
       test_accuracy_top5(target, output)
-      print((1-test_accuracy_top5.result())*100)
 
 
     train_err1 = (1-train_accuracy_top1.result())*100
@@ -225,9 +221,6 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-    
-    
 
     
     
