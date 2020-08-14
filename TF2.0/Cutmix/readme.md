@@ -1,30 +1,25 @@
 
 # Cutmix implemented in the Tensorflow 2.x
 
-
----------------------------------------------------------------------------------------------------------------------------------
-
-#### (2020.7.6) I've raised an issue on a possibe Saved_Model API bug, and it is under investigation by the Tensorflow team.    (https://github.com/tensorflow/tensorflow/issues/41045) 
-#### (2020.8.11) Saved_Model has been replaced with Checkpoint due to the above unresolved investigation.
-
----------------------------------------------------------------------------------------------------------------------------------
 #### This is a tensorflow 2.x version of CutMix: Regularization Strategy to Train Strong Classifiers with Localizable Features 
 
-#### original paper: https://arxiv.org/abs/1905.04899
+## Issue history
+- (2020.7.6) I've raised an issue on a possibe Saved_Model API bug, and it is under investigation by the Tensorflow team.    (https://github.com/tensorflow/tensorflow/issues/41045) 
+- (2020.8.11) Saved_Model has been replaced with Checkpoint due to the above unresolved investigation.
 
-#### original code: https://github.com/clovaai/CutMix-PyTorch
 
+## Implementation
 This code has followed the official tensorflow 2.0 coding guideline (https://www.tensorflow.org/alpha/guide/effective_tf2). 
 
 Requirements: Tensorflow >= 2.0 , Python >= 3.6.0
 
-- Currently only ResNet-50 for network, CIFAR-10 and CIFAR-100 for datasets are available. PyramidNet and ImageNet dataset will be available soon.
+- Currently only ResNet-50 is available as a backbone network.
 - Tensorflow 2.x doesn't support slicing so instead masking has been used. Please correct me know if slicing (assignment) functionality exists in Tensorflow.)  
-- Hyper-parameters and training strategies all follow the original Pytorch version.
-
 
 <br/>
 <br/>
+
+## Results
 
 ![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/Cutmix/imgs/original.PNG) \
 ![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/Cutmix/imgs/cutmix.PNG) \
@@ -39,7 +34,7 @@ Requirements: Tensorflow >= 2.0 , Python >= 3.6.0
 <br/>
 <br/>
 
-## Training (ResNet 50)
+## Training & Inference 
 
 ``` 
 python Train.py \
@@ -58,7 +53,6 @@ python Train.py \
 --verbose 1
 ```
 
-## Test
 
 ``` 
 python Test.py \
@@ -69,3 +63,6 @@ python Test.py \
 --verbose 1
 ```
 
+## Reference
+- original paper: https://arxiv.org/abs/1905.04899
+- original code (Pytorch) : https://github.com/clovaai/CutMix-PyTorch
