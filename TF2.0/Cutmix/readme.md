@@ -21,7 +21,7 @@ Requirements: Tensorflow >= 2.0 , Python >= 3.6.0
 - Currently only ResNet-50 for network, CIFAR-10 and CIFAR-100 for datasets are available. PyramidNet and ImageNet dataset will be available soon.
 - Tensorflow 2.x doesn't support slicing so instead masking has been used. Please correct me know if slicing (assignment) functionality exists in Tensorflow.)  
 - Hyper-parameters and training strategies all follow the original Pytorch version.
-- Average one epoch training time (CIFAR-100 training data): Original 15.42s     Cutmix: 22.97s 
+
 
 <br/>
 <br/>
