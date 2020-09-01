@@ -128,11 +128,11 @@ class Conv(tf.keras.layers.Layer):
         if self.normal == 'SN':
             self.conv = SpectralNormalization(
                 tf.keras.layers.Conv2D(filters=self.filters, kernel_size=(self.kernel_size, self.kernel_size),
-                                       kernel_regularizer=tf.keras.regularizers.L2(0.0001),
+                                       kernel_regularizer=tf.keras.regularizers.l2(0.0001),
                                        strides=(self.strides, self.strides), use_bias=self.use_bias))
         else:
             self.conv = tf.keras.layers.Conv2D(filters=self.filters, kernel_size=(self.kernel_size, self.kernel_size),
-                                               kernel_regularizer=tf.keras.regularizers.L2(0.0001),
+                                               kernel_regularizer=tf.keras.regularizers.l2(0.0001),
                                                strides=(self.strides, self.strides), use_bias=self.use_bias)
 
     def __call__(self, x):
@@ -174,12 +174,12 @@ class ResnetAdaILNBlock(tf.keras.layers.Layer):
         self.dim = dim
         self.use_bias = use_bias
         self.conv1 = tf.keras.layers.Conv2D(filters=self.dim, kernel_size=(3, 3),
-                                            kernel_regularizer=tf.keras.regularizers.L2(0.0001),
+                                            kernel_regularizer=tf.keras.regularizers.l2(0.0001),
                                             strides=(1, 1), use_bias=self.use_bias)
         self.norm1 = adaILN(self.dim)
         self.relu1 = tf.keras.layers.ReLU()
         self.conv2 = tf.keras.layers.Conv2D(filters=self.dim, kernel_size=(3, 3),
-                                            kernel_regularizer=tf.keras.regularizers.L2(0.0001), strides=(1, 1),
+                                            kernel_regularizer=tf.keras.regularizers.l2(0.0001), strides=(1, 1),
                                             use_bias=self.use_bias)
         self.norm2 = adaILN(self.dim)
 
