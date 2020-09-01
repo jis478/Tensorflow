@@ -1,4 +1,7 @@
 import tensorflow as tf
+import tensorflow_addons as tfa
+import matplotlib.pyplot as plt
+import numpy as np
 
 class SpectralNormalization(tf.keras.layers.Wrapper):
     ''' # https://github.com/thisisiron/spectral_normalization-tf2/blob/master/sn.py

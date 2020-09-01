@@ -56,5 +56,5 @@ def main():
         gan.test()
         print(" [*] Test finished!")
 
-    if __name__ == '__main__':
-        main()
+if __name__ == '__main__':
+    main()
