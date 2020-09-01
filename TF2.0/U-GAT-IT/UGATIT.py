@@ -257,7 +257,7 @@ class UGATIT(object):
             if iter % self.print_freq == 0:  # Only A->B
                 real_A = self.test_iterator.get_next()
                 fake_A2B, _, _ = self.genA2B(real_A)
-                image_save(real_A, fake_A2B, self.img_save_path, iter)
+                image_save(real_A, fake_A2B, self.image_path, iter)
 
             if iter % self.save_freq == 0:
                 self.ckpt_manager.save(checkpoint_number=iter)
