@@ -12,7 +12,9 @@ def parse_args():
     parser.add_argument('--light', type=str2bool, default=False, help='[U-GAT-IT full version / U-GAT-IT light version]')
 
     parser.add_argument('--iterations', type=int, default=1000000, help='The number of training iterations')
-    parser.add_argument('--batch_size', type=int, default=1, help='The size of batch size')
+    parser.add_argument('--batch_size', type=int, default=1, help='The size of batch size for training')
+    parser.add_argument('--sample_num', type=int, default=5, help='The size of batch size for saving images')
+   
     parser.add_argument('--print_freq', type=int, default=10, help='The number of loss print freq')
     parser.add_argument('--sample_freq', type=int, default=1000, help='The number of image print freq')
     parser.add_argument('--save_freq', type=int, default=100000, help='The number of model save freq')

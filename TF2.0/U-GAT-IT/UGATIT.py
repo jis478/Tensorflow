@@ -15,6 +15,7 @@ class UGATIT(object):
         self.light = args.light
         self.iterations = args.iterations
         self.batch_size = args.batch_size
+        self.sample_num = args.sample_num
         self.print_freq = args.print_freq
         self.sample_freq = args.sample_freq
         self.save_freq = args.save_freq
