@@ -91,6 +91,7 @@ class UGATIT(object):
 
         test_A = test_A.map(lambda x, y: test_augment(x, y, self.img_size), num_parallel_calls=AUTOTUNE)
         test_A = test_A.batch(self.sample_num)
+        test_A = test_A.repeat()
         # test_B = test_B.map(test_augment, num_parallel_calls=AUTOTUNE)
         # test_B = test_B.batch(self.batch_size // 2)
         # test_dataset = tf.data.Dataset.zip((test_A, test_B))
