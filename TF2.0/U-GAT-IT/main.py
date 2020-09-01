@@ -46,7 +46,7 @@ def main():
     gan = UGATIT(args)
 
     # build graph
-    gan.build_model()
+    gan.build()
 
     if args.phase == 'train':
         gan.train()
