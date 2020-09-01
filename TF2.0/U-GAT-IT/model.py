@@ -31,26 +31,26 @@ class ResnetGenerator(tf.keras.Model):
             self.DownBlock.append(ResnetBlock(self.ngf * mult, use_bias=False))
 
         # CAM
-        self.gap_fc = tf.keras.layers.Dense(1, kernel_regularizer=tf.keras.regularizers.L2(0.0001), use_bias=False)
+        self.gap_fc = tf.keras.layers.Dense(1, kernel_regularizer=tf.keras.regularizers.l2(0.0001), use_bias=False)
         self.gap = tf.keras.layers.GlobalAveragePooling2D()
-        self.gmp_fc = tf.keras.layers.Dense(1, kernel_regularizer=tf.keras.regularizers.L2(0.0001), use_bias=False)
+        self.gmp_fc = tf.keras.layers.Dense(1, kernel_regularizer=tf.keras.regularizers.l2(0.0001), use_bias=False)
         self.gmp = tf.keras.layers.GlobalMaxPool2D()
         self.conv1x1 = tf.keras.layers.Conv2D(filters=self.ngf * mult, kernel_size=(1, 1),
-                                              kernel_regularizer=tf.keras.regularizers.L2(0.0001),
+                                              kernel_regularizer=tf.keras.regularizers.l2(0.0001),
                                               strides=(1, 1), use_bias=True)
         self.relu = tf.keras.layers.ReLU()
 
         # Gamma, Beta block (the argument 'self.light' is not used in Tensorflow as the input dims are automatically detected)
         self.FC = []
         self.FC.append(
-            tf.keras.layers.Dense(self.ngf * mult, kernel_regularizer=tf.keras.regularizers.L2(0.0001), use_bias=False))
+            tf.keras.layers.Dense(self.ngf * mult, kernel_regularizer=tf.keras.regularizers.l2(0.0001), use_bias=False))
         self.FC.append(tf.keras.layers.ReLU())
         self.FC.append(
-            tf.keras.layers.Dense(self.ngf * mult, kernel_regularizer=tf.keras.regularizers.L2(0.0001), use_bias=False))
+            tf.keras.layers.Dense(self.ngf * mult, kernel_regularizer=tf.keras.regularizers.l2(0.0001), use_bias=False))
         self.FC.append(tf.keras.layers.ReLU())
-        self.gamma = tf.keras.layers.Dense(self.ngf * mult, kernel_regularizer=tf.keras.regularizers.L2(0.0001),
+        self.gamma = tf.keras.layers.Dense(self.ngf * mult, kernel_regularizer=tf.keras.regularizers.l2(0.0001),
                                            use_bias=False)
-        self.beta = tf.keras.layers.Dense(self.ngf * mult, kernel_regularizer=tf.keras.regularizers.L2(0.0001),
+        self.beta = tf.keras.layers.Dense(self.ngf * mult, kernel_regularizer=tf.keras.regularizers.l2(0.0001),
                                           use_bias=False)
 
         self.UpBlock1 = []
@@ -132,15 +132,15 @@ class Discriminator(tf.keras.Model):
         mult = 2 ** (n_layers - 2)
         self.gap = tf.keras.layers.GlobalAveragePooling2D()
         self.gap_fc = SpectralNormalization(
-            tf.keras.layers.Dense(1, kernel_regularizer=tf.keras.regularizers.L2(0.0001), use_bias=False))
-        # self.gap_fc = tf.keras.layers.Dense(1, kernel_regularizer=tf.keras.regularizers.L2(0.0001), use_bias=False)
+            tf.keras.layers.Dense(1, kernel_regularizer=tf.keras.regularizers.l2(0.0001), use_bias=False))
+        # self.gap_fc = tf.keras.layers.Dense(1, kernel_regularizer=tf.keras.regularizers.l2(0.0001), use_bias=False)
         self.gmp = tf.keras.layers.GlobalMaxPool2D()
-        # self.gmp_fc = tf.keras.layers.Dense(1, kernel_regularizer=tf.keras.regularizers.L2(0.0001), use_bias=False)
+        # self.gmp_fc = tf.keras.layers.Dense(1, kernel_regularizer=tf.keras.regularizers.l2(0.0001), use_bias=False)
         self.gmp_fc = SpectralNormalization(
-            tf.keras.layers.Dense(1, kernel_regularizer=tf.keras.regularizers.L2(0.0001), use_bias=False))
-        # self.gmp_fc = SpectralNormalization(tf.keras.layers.Dense(1, kernel_regularizer=tf.keras.regularizers.L2(0.0001), use_bias=False))
+            tf.keras.layers.Dense(1, kernel_regularizer=tf.keras.regularizers.l2(0.0001), use_bias=False))
+        # self.gmp_fc = SpectralNormalization(tf.keras.layers.Dense(1, kernel_regularizer=tf.keras.regularizers.l2(0.0001), use_bias=False))
         self.conv1x1 = tf.keras.layers.Conv2D(filters=self.ndf * mult, kernel_size=(1, 1),
-                                              kernel_regularizer=tf.keras.regularizers.L2(0.0001), strides=(1, 1),
+                                              kernel_regularizer=tf.keras.regularizers.l2(0.0001), strides=(1, 1),
                                               use_bias=True)
         self.lrelu = tf.keras.layers.LeakyReLU(alpha=0.2)
         self.conv = Conv(filters=1, kernel_size=4, strides=1, pad=1, normal='SN', act=None,
