@@ -34,7 +34,7 @@ def parse_args():
     parser.add_argument('--ckpt_path', type=str, default='ckpt', help='Tensorflow ckpt folder')
     parser.add_argument('--tensorboard_path', type=str, default='tensorboard', help='Tensorflow tensorboard folder')
     parser.add_argument('--image_path', type=str, default='image', help='Sample translation image folder')
-
+    return parser.parse_args()
 
 """main"""
 def main():
