@@ -6,7 +6,7 @@ from ops import *
 from utils import *
 from model import *
 import datetime
-
+import time
 
 AUTOTUNE = tf.data.experimental.AUTOTUNE
 
