@@ -112,7 +112,7 @@ class UGATIT(object):
         current_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
         self.ckpt_path = os.path.join(current_time, self.ckpt_path)
         self.tensorboard_path = os.path.join(current_time, self.tensorboard_path)
-        self.img_save_path = os.path.join(current_time, self.img_save_path)
+        self.image_path = os.path.join(current_time, self.image_path)
         os.makedirs(self.tensorboard_path)
         os.makedirs(self.img_save_path)
 
