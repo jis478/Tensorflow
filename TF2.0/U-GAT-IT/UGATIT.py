@@ -6,6 +6,9 @@ from ops import *
 from utils import *
 from model import *
 
+
+AUTOTUNE = tf.data.experimental.AUTOTUNE
+
 class UGATIT(object):
     def __init__(self, args):
 
