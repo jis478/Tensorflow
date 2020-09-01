@@ -114,7 +114,7 @@ class UGATIT(object):
         self.tensorboard_path = os.path.join(current_time, self.tensorboard_path)
         self.image_path = os.path.join(current_time, self.image_path)
         os.makedirs(self.tensorboard_path)
-        os.makedirs(self.img_save_path)
+        os.makedirs(self.image_path)
 
         # ckpt manager
         ckpt = tf.train.Checkpoint(genA2B=self.genA2B,
