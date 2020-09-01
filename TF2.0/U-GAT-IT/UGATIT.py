@@ -5,8 +5,9 @@ import tensorflow_datasets as tfds
 from ops import *
 from utils import *
 from model import *
+import datetime
 
-
+
 AUTOTUNE = tf.data.experimental.AUTOTUNE
 
 class UGATIT(object):
