@@ -19,7 +19,7 @@ def ad_loss(y_pred, y_true):
 
 
 def bce_loss(y_pred, y_true):
-    return tf.keras.losses.CategoricalCrossentropy(from_logits=True)(y_true, y_pred)
+    return tf.keras.losses.BinaryCrossentropy(from_logits=True, reduction=)(y_true, y_pred)
 
 
 def id_loss(y_pred, y_true):
