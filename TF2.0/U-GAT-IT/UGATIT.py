@@ -255,7 +255,7 @@ class UGATIT(object):
                 print("[%5d/%5d] time: %4.4f d_loss: %.8f, g_loss: %.8f" % (
                 iter, self.iterations, time.time() - start_time, D_loss, G_loss))
 
-            if iter % self.print_freq == 0:  # Only A->B
+            if iter % self.sample_freq == 0:  # Only A->B
                 real_A = self.test_iterator.get_next()
                 fake_A2B, _, _ = self.genA2B(real_A)
                 image_save(real_A, fake_A2B, self.image_path, iter)
