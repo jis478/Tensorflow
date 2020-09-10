@@ -3,6 +3,9 @@
 
 #### This is a tensorflow 2 version of U-GAT-IT: Unsupervised Generative Attentional Networks with Adaptive Layer-Instance Normalization for Image-to-Image Translation
 
+![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/U-GAT-IT/imgs/teaser.png) \
+
+
 ## Issue history
 - (2020.9.7) U-GAT-IT requires more GPU resources compared to other traditional Image to Image Translation algorithms such as CycleGAN. With my GTX 1080 it was impossible to proceed as many iterations (1,000,000) as described in the paper. I'm planning to run this code on Google Cloud with V100 and the result will be reported here soon. If you have enough GPU resources to run this code, please share with me the result.
 
