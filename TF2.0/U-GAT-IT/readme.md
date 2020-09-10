@@ -15,6 +15,7 @@ Requirements: Tensorflow >= 2.0 , Python >= 3.6.0
 
 
 ## Training & Inference 
+- Please check 'main.py' for detail training conditions.
 
 ``` 
 python main.py --dataset 'horse2zebra'    # Downloads Tfds dataset automatically 
@@ -30,6 +31,15 @@ python Test.py --dataset 'dataset' --ckpt_path './20200812_0946/ckpt/.'        #
 
 ```
 
+## Intermediate training results
+
+![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/U-GAT-IT/imgs/creenshot from 2020-09-10 14-27-55.png) \
+![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/U-GAT-IT/imgs/Screenshot from 2020-09-10 14-27-17.png) 
+
+**Picture:** (UP) Discriminator loss (DOWN) Generator loss
+
+
+
 ## Reference
 - original paper: https://arxiv.org/abs/1907.10830
 - original code (Tensorflow) : https://github.com/taki0112/UGATIT
@@ -37,6 +47,4 @@ python Test.py --dataset 'dataset' --ckpt_path './20200812_0946/ckpt/.'        #
                 
 
 
-
-## Result (up to 20,000 iterations)
 
