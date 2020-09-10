@@ -7,7 +7,7 @@ Tensorflow 2 style implementations for various research papers
   - StarGAN (completed) 
   - PGGAN (on hold)
  
-## Tensorflow 2.x
+## Tensorflow 2.1 ~ 
   - SinGAN (completed) 
   - Cutmix (completed) 
-  - U-GAT-IT (working on)
+  - U-GAT-IT (completed)
