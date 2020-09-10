@@ -17,21 +17,46 @@ Requirements: Tensorflow >= 2.0 , Python >= 3.6.0
 ## Training & Inference 
 - Please check 'main.py' for detail training conditions. 
 
+#### training
 ``` 
-python main.py --dataset 'horse2zebra'    # Downloads 'horse2zebra' Tfds dataset automatically 
+python main.py --phase 'train' --dataset 'horse2zebra'    # Downloads 'horse2zebra' Tfds dataset automatically 
 
-pythin main.py --dataset 'dataset'        # Custom dataset to be used :  ./dataset/trainA, ./dataset/trainB (test data are not used for training)
+pythin main.py --phase 'train' --dataset 'dataset'        # Custom dataset to be used :  ./dataset/trainA, ./dataset/trainB (test data are not used for training)
 
 ```
 
+#### Inference
 ``` 
-python Test.py --dataset 'horse2zebra' --ckpt_path './20200812_0946/ckpt/.'    # (horse -> zebra) The latest checkpoint will be loaded 
+python main.py --phase 'test' --dataset 'horse2zebra' --ckpt_path './20200812_0946/ckpt/.'    # (horse -> zebra) The latest checkpoint will be loaded 
 
-python Test.py --dataset 'dataset' --ckpt_path './20200812_0946/ckpt/.'        # (Domain A -> Domain B) Custom dataset to be used:  ./dataset/TestA, ./dataset/TestB 
+python main.py --phase 'test' --dataset 'dataset' --ckpt_path './20200812_0946/ckpt/.'        # (Domain A -> Domain B) Custom dataset to be used:  ./dataset/TestA, ./dataset/TestB 
 
 ```
+
+#### Custom dataset structure  
+```
+├── dataset
+       ├── trainA
+           ├── xxx.jpg
+           ├── yyy.jpg
+           └── ...
+       ├── trainB
+           ├── zzz.jpg
+           ├── www.jpg
+           └── ...
+       ├── testA
+           ├── aaa.jpg 
+           ├── bbb.jpg
+           └── ...
+       └── testB
+           ├── ccc.jpg 
+           ├── ddd.jpg
+           └── ...
+           
+``` 
 
 ## Intermediate training results
+- As can be seen here, the training is incomplete.
 
 ![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/U-GAT-IT/imgs/D_loss.png) \
 ![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/U-GAT-IT/imgs/G_loss.png) 
