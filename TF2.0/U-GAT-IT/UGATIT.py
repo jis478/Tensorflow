@@ -9,6 +9,8 @@ import datetime
 import time
 
 AUTOTUNE = tf.data.experimental.AUTOTUNE
+tf.config.experimental_run_functions_eagerly(True)
+
 
 
 class UGATIT(object):
@@ -164,6 +166,7 @@ class UGATIT(object):
                 print('checkpoint not restored')
                 raise Except
 
+    @tf.function 
     def train_step(self, real_A, real_B, iter):
         with tf.GradientTape(persistent=True) as tape:
 
@@ -250,8 +253,8 @@ class UGATIT(object):
           self.train_step(real_A, real_B, iter)
 
           with self.train_summary_writer.as_default():
-            tf.summary.scalar('Discriminator_loss', self.D_loss_tot, step=iter)
-            tf.summary.scalar('Generator_loss', self.G_loss_tot, step=iter)
+            tf.summary.scalar('Discriminator_loss', self.D_loss_tot/iter*len(real_A), step=iter)
+            tf.summary.scalar('Generator_loss', self.G_loss_tot/iter*len(real_A), step=iter)
 
           if iter % self.print_freq == 0:
             print("[%5d/%5d] time: %4.4f d_loss: %.8f, g_loss: %.8f" % (iter, self.iterations, time.time() - start_time, self.D_loss_tot/iter*len(real_A), self.G_loss_tot/iter*len(real_A)))
