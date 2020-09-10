@@ -1,10 +1,10 @@
 
-# U-GAT-IT implemented in the Tensorflow 2
+# U-GAT-IT implemented in Tensorflow 2
 
-#### This is a tensorflow 2 version of U-GAT-IT:
+#### This is a tensorflow 2 version of U-GAT-IT: Unsupervised Generative Attentional Networks with Adaptive Layer-Instance Normalization for Image-to-Image Translation
 
 ## Issue history
-- (2020.9.7) U-GAT-IT requires more GPU resources compared to other Image to Image Translation algorithms such as CycleGAN and MUNIT. With my GTX 1080 it was impossible to proceed as many iterations (1,000,000) as described in the paper. I'm planning to run this code on Google Cloud with V100 and the result will be reported here soon.
+- (2020.9.7) U-GAT-IT requires more GPU resources compared to other traditional Image to Image Translation algorithms such as CycleGAN. With my GTX 1080 it was impossible to proceed as many iterations (1,000,000) as described in the paper. I'm planning to run this code on Google Cloud with V100 and the result will be reported here soon. If you have enough GPU resources to run this code, please share with me the result.
 
 ## Implementation
 - This code has followed the official tensorflow 2.0 coding guideline (https://www.tensorflow.org/alpha/guide/effective_tf2). 
@@ -15,19 +15,19 @@ Requirements: Tensorflow >= 2.0 , Python >= 3.6.0
 
 
 ## Training & Inference 
-- Please check 'main.py' for detail training conditions.
+- Please check 'main.py' for detail training conditions. 
 
 ``` 
-python main.py --dataset 'horse2zebra'    # Downloads Tfds dataset automatically 
+python main.py --dataset 'horse2zebra'    # Downloads 'horse2zebra' Tfds dataset automatically 
 
-pythin main.py --dataset 'dataset'        # Custom dataset to be used :  ./dataset/trainA, ./dataset/trainB
+pythin main.py --dataset 'dataset'        # Custom dataset to be used :  ./dataset/trainA, ./dataset/trainB (test data are not used for training)
 
 ```
 
 ``` 
-python Test.py --dataset 'horse2zebra' --ckpt_path './20200812_0946/ckpt/.'    # The latest checkpoint will be loaded 
+python Test.py --dataset 'horse2zebra' --ckpt_path './20200812_0946/ckpt/.'    # (horse -> zebra) The latest checkpoint will be loaded 
 
-python Test.py --dataset 'dataset' --ckpt_path './20200812_0946/ckpt/.'        # Custom dataset to be used:  ./dataset/TestA, ./dataset/TestB
+python Test.py --dataset 'dataset' --ckpt_path './20200812_0946/ckpt/.'        # (Domain A -> Domain B) Custom dataset to be used:  ./dataset/TestA, ./dataset/TestB 
 
 ```
 
