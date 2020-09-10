@@ -2,7 +2,7 @@
 
 Tensorflow 2 style implementations for various research papers 
 
-## Tensorflow 1.13 + Keras API + Eager mode
+## Tensorflow 1.13 ~ + Eager mode
   - CycleGAN (completed) 
   - StarGAN (completed) 
   - PGGAN (on hold)
