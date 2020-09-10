@@ -8,12 +8,33 @@
 
 ## Implementation
 - This code has followed the official tensorflow 2.0 coding guideline (https://www.tensorflow.org/alpha/guide/effective_tf2). 
-- There are two versions of original codes (Tensorflow and Pytorch) and I've thoroughly investigated them. This code is following
+- There are two versions of original codes (Tensorflow 1.x and Pytorch) and I've thoroughly investigated them. This code is following
   the best parts of each version.
 
 Requirements: Tensorflow >= 2.0 , Python >= 3.6.0
 
-## Usage
+
+## Training & Inference 
+
+``` 
+python main.py --dataset 'horse2zebra'    # Downloads Tfds dataset automatically 
+
+pythin main.py --dataset 'dataset'        # Custom dataset to be used :  ./dataset/trainA, ./dataset/trainB
+
+```
+
+``` 
+python Test.py --dataset 'horse2zebra' --ckpt_path './20200812_0946/ckpt/.'    # The latest checkpoint will be loaded 
+
+python Test.py --dataset 'dataset' --ckpt_path './20200812_0946/ckpt/.'        # Custom dataset to be used:  ./dataset/TestA, ./dataset/TestB
+
+```
+
+## Reference
+- original paper: https://arxiv.org/abs/1907.10830
+- original code (Tensorflow) : https://github.com/taki0112/UGATIT
+                (Pytorch) : https://github.com/znxlwm/UGATIT-pytorch
+                
 
 
 
