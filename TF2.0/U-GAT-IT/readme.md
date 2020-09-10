@@ -33,8 +33,8 @@ python Test.py --dataset 'dataset' --ckpt_path './20200812_0946/ckpt/.'        #
 
 ## Intermediate training results
 
-![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/U-GAT-IT/imgs/creenshot from 2020-09-10 14-27-55.png) \
-![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/U-GAT-IT/imgs/Screenshot from 2020-09-10 14-27-17.png) 
+![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/U-GAT-IT/imgs/D_loss.png) \
+![Representative image](https://github.com/jis478/Tensorflow/blob/master/TF2.0/U-GAT-IT/imgs/G_loss.png) 
 
 **Picture:** (UP) Discriminator loss (DOWN) Generator loss
 
